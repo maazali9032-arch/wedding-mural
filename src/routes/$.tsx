@@ -1,0 +1,65 @@
+import { createFileRoute, useLocation } from "@tanstack/react-router";
+import { useQuery } from "@tanstack/react-query";
+import { resolveSlug } from "@/lib/zar/slug";
+import { fetchInvitation } from "@/lib/zar/invitation";
+import { Invitation } from "@/components/zar/Invitation";
+import {
+  ErrorScreen,
+  FallbackScreen,
+  LoadingScreen,
+  NotFoundScreen,
+} from "@/components/zar/Screens";
+
+export const Route = createFileRoute("/$")({
+  head: () => ({
+    meta: [
+      { title: "Wedding Invitation" },
+      {
+        name: "description",
+        content: "A digital wedding invitation, illustrated as one continuous scroll.",
+      },
+      { property: "og:title", content: "Wedding Invitation" },
+      {
+        property: "og:description",
+        content: "A digital wedding invitation, illustrated as one continuous scroll.",
+      },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
+    ],
+  }),
+  component: InvitationRoute,
+});
+
+function InvitationRoute() {
+  const { pathname } = useLocation();
+  const slug = resolveSlug(pathname);
+
+  const query = useQuery({
+    queryKey: ["zar-invitation", slug],
+    queryFn: () => fetchInvitation(slug as string),
+    enabled: Boolean(slug),
+    retry: 1,
+    staleTime: 60_000,
+  });
+
+  if (!slug) return <NotFoundScreen />;
+  if (query.isPending) return <LoadingScreen />;
+  if (query.isError) return <ErrorScreen onRetry={() => void query.refetch()} />;
+
+  const payload = query.data;
+
+  if (payload.state === "fallback") {
+    return (
+      <FallbackScreen
+        brandName={payload.brand?.display_name ?? null}
+        shop={payload.fallback ?? null}
+      />
+    );
+  }
+
+  if (payload.state !== "live" || !payload.invitation?.content) {
+    return <NotFoundScreen />;
+  }
+
+  return <Invitation payload={payload} />;
+}
