@@ -148,17 +148,17 @@
  * ------------------------------------------------------------------------ */
 
 :root {
-  /* Midnight Plum: pearl paper, aubergine ink, champagne ornament */
-  --mural-paper: oklch(0.965 0.018 83);
-  --mural-paper-deep: oklch(0.92 0.024 78);
-  --mural-ink: oklch(0.29 0.075 326);
-  --mural-ink-soft: oklch(0.47 0.055 326);
-  --mural-line-faint: oklch(0.74 0.028 326);
-  --mural-gold: oklch(0.75 0.075 82);
-  --mural-rose: oklch(0.66 0.085 12);
-  --mural-water: oklch(0.88 0.028 278);
-  --mural-glow: oklch(0.92 0.045 85 / 0.55);
-  --mural-ticker: oklch(0.97 0.018 83 / 0.28);
+  /* Delft & Chinoiserie: porcelain, cobalt, silver and willow sage */
+  --mural-paper: oklch(0.985 0.006 250);
+  --mural-paper-deep: oklch(0.945 0.014 248);
+  --mural-ink: oklch(0.34 0.15 261);
+  --mural-ink-soft: oklch(0.49 0.09 258);
+  --mural-line-faint: oklch(0.73 0.035 255);
+  --mural-gold: oklch(0.62 0.018 250);
+  --mural-rose: oklch(0.66 0.06 150);
+  --mural-water: oklch(0.89 0.035 245);
+  --mural-glow: oklch(0.93 0.018 247 / 0.55);
+  --mural-ticker: oklch(0.985 0.006 250 / 0.28);
 }
 
 @theme inline {
@@ -175,16 +175,16 @@
 @utility zar-paper {
   background-color: var(--mural-paper);
   background-image:
-    radial-gradient(120% 60% at 50% 0%, oklch(0.99 0.012 83 / 0.9), transparent 70%),
-    radial-gradient(90% 50% at 0% 40%, oklch(0.91 0.035 79 / 0.5), transparent 70%),
-    radial-gradient(90% 50% at 100% 75%, oklch(0.9 0.03 326 / 0.4), transparent 70%);
+    radial-gradient(120% 60% at 50% 0%, oklch(1 0 0 / 0.9), transparent 70%),
+    radial-gradient(90% 50% at 0% 40%, oklch(0.92 0.025 245 / 0.5), transparent 70%),
+    radial-gradient(90% 50% at 100% 75%, oklch(0.91 0.02 150 / 0.35), transparent 70%);
 }
 
 @utility zar-frame {
   border: 1px solid var(--mural-line-faint);
   box-shadow:
     0 1px 0 oklch(1 0 0 / 0.6) inset,
-    0 18px 40px -30px oklch(0.29 0.075 326 / 0.5);
+    0 18px 40px -30px oklch(0.34 0.15 261 / 0.45);
 }
 
 @keyframes zar-marquee {
