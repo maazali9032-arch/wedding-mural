@@ -12,7 +12,6 @@ import {
 } from "./Motifs";
 import { BrandTicker } from "./BrandTicker";
 import { Rsvp } from "./Rsvp";
-import { QrPanel } from "./QrPanel";
 import type { ZarContact, ZarPayload } from "@/lib/zar/types";
 
 const clean = (v?: string | null) => {
@@ -80,7 +79,6 @@ export function Invitation({ payload }: { payload: ZarPayload }) {
   const gallery = useMemo(() => galleryUrls(content.gallery), [content.gallery]);
   const relatives = useMemo(() => relativeNames(content.relatives), [content.relatives]);
   const contacts = (content.contacts ?? []).filter((c) => clean(c?.phone)).slice(0, 2);
-  const publicUrl = clean(payload.invitation?.public_url);
   const mapsUrl = safeHttp(venue.maps_url);
   const musicUrl = content.music?.enabled ? safeHttp(content.music?.url) : null;
 
@@ -428,11 +426,11 @@ export function Invitation({ payload }: { payload: ZarPayload }) {
         <Rsvp />
       </Region>
 
-      {/* Region 8 — contacts and QR */}
-      {contacts.length || publicUrl ? (
+      {/* Region 8 — invitation contacts */}
+      {contacts.length ? (
         <Region className="pb-24 text-center">
           <SpineKnot />
-          <div className="mt-8 grid grid-cols-1 gap-10 sm:grid-cols-2 sm:items-start">
+          <div className="mx-auto mt-8 max-w-md">
             {contacts.length ? (
               <Settle>
                 <Eyebrow>Get in touch</Eyebrow>
@@ -481,14 +479,6 @@ export function Invitation({ payload }: { payload: ZarPayload }) {
               </Settle>
             ) : null}
 
-            {publicUrl ? (
-              <Settle delay={0.2}>
-                <Eyebrow>Scan &amp; share</Eyebrow>
-                <div className="mt-4">
-                  <QrPanel url={publicUrl} label={content.qr_label ?? null} />
-                </div>
-              </Settle>
-            ) : null}
           </div>
         </Region>
       ) : null}
