@@ -109,6 +109,12 @@ export function Invitation({ payload }: { payload: ZarPayload }) {
 
   return (
     <main className="zar-paper relative min-h-screen overflow-x-hidden font-body text-[var(--mural-ink)]">
+      <img
+        src="/decorative-frame.webp"
+        alt=""
+        aria-hidden="true"
+        className="pointer-events-none fixed inset-0 z-0 hidden h-full w-full object-fill max-[684px]:block"
+      />
       <InkSpine />
       <BrandTicker
         name={payload.brand?.display_name ?? null}
